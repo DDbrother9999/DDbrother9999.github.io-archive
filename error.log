@@ -85,3 +85,89 @@ remote: Permission to DDbrother9999/DDbrother9999.github.io.git denied to Starli
 fatal: unable to access 'https://github.com/DDbrother9999/DDbrother9999.github.io.git/': The requested URL returned error: 403
 
 
+----------
+
+Thu Jun 20 2024 13:37:23 GMT-0400 (Eastern Daylight Time)
+
+warning: in the working copy of 'assets/bootstrap/css/bootstrap.min.css', LF will be replaced by CRLF the next time Git touches it
+
+
+----------
+
+Thu Jun 20 2024 13:37:23 GMT-0400 (Eastern Daylight Time)
+
+warning: in the working copy of 'assets/bootstrap/js/bootstrap.min.js', LF will be replaced by CRLF the next time Git touches it
+
+
+----------
+
+Thu Jun 20 2024 13:37:23 GMT-0400 (Eastern Daylight Time)
+
+warning: in the working copy of 'error.log', LF will be replaced by CRLF the next time Git touches it
+
+
+----------
+
+Thu Jun 20 2024 13:37:23 GMT-0400 (Eastern Daylight Time)
+
+warning: in the working copy of 'index.html', LF will be replaced by CRLF the next time Git touches it
+
+
+----------
+
+Thu Jun 20 2024 13:37:23 GMT-0400 (Eastern Daylight Time)
+
+warning: in the working copy of 'about.html', LF will be replaced by CRLF the next time Git touches it
+
+
+----------
+
+Thu Jun 20 2024 13:37:23 GMT-0400 (Eastern Daylight Time)
+
+warning: in the working copy of 'assets/fonts/font-awesome.min.css', LF will be replaced by CRLF the next time Git touches it
+
+
+----------
+
+Thu Jun 20 2024 13:37:23 GMT-0400 (Eastern Daylight Time)
+
+warning: in the working copy of 'assets/fonts/fontawesome-webfont.svg', LF will be replaced by CRLF the next time Git touches it
+
+
+----------
+
+Thu Jun 20 2024 13:37:24 GMT-0400 (Eastern Daylight Time)
+
+warning: in the working copy of 'assets/js/clean-blog.js', LF will be replaced by CRLF the next time Git touches it
+
+
+----------
+
+Thu Jun 20 2024 13:37:24 GMT-0400 (Eastern Daylight Time)
+
+warning: in the working copy of 'contact.html', LF will be replaced by CRLF the next time Git touches it
+
+
+----------
+
+Thu Jun 20 2024 13:37:24 GMT-0400 (Eastern Daylight Time)
+
+warning: in the working copy of 'post.html', LF will be replaced by CRLF the next time Git touches it
+
+
+----------
+
+Thu Jun 20 2024 13:37:27 GMT-0400 (Eastern Daylight Time)
+
+error: LoadLibraryExW() failed with: The paging file is too small for this operation to complete.?
+
+
+
+----------
+
+Thu Jun 20 2024 13:37:28 GMT-0400 (Eastern Daylight Time)
+
+fatal: Unsupported SSL backend 'openssl'. Supported SSL backends:
+	schannel
+
+
