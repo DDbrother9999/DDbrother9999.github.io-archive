@@ -1,0 +1,6 @@
+body {
+  color: var(--bs-emphasis-color);
+  height: 300px;
+  --bs-body-bg: var(--bs-emphasis-color);
+}
+
