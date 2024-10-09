@@ -11,7 +11,7 @@
             align-items: center;
             height: 100vh;
             margin: 0;
-            background-color: #f4f4f4;
+            background-color: black; /* Set background to black */
             font-family: Arial, sans-serif;
             overflow: hidden;
             position: relative;
@@ -19,6 +19,7 @@
         .container {
             text-align: center;
             z-index: 1;
+            color: white; /* Text color white for visibility */
         }
         h1 {
             font-size: 4rem;
@@ -41,16 +42,32 @@
         }
         .star {
             position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: yellow;
+            width: 8px;
+            height: 8px;
+            background-color: white;
             clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
             opacity: 0.8;
-            animation: fall 2s linear forwards;
+            animation: fall 2.5s ease-out forwards;
+        }
+        /* Variety of star colors */
+        .star:nth-child(odd) {
+            background-color: #FFD700; /* Gold */
+        }
+        .star:nth-child(even) {
+            background-color: #ADFF2F; /* Greenish yellow */
+        }
+        .star:nth-child(3n) {
+            background-color: #00BFFF; /* Deep sky blue */
+        }
+        .star:nth-child(5n) {
+            background-color: #FF69B4; /* Hot pink */
         }
         @keyframes fall {
-            to {
-                transform: translateY(100vh);
+            0% {
+                transform: translateY(0) scale(1);
+            }
+            100% {
+                transform: translateY(100vh) scale(0.5); /* Stars shrink as they fall */
                 opacity: 0;
             }
         }
@@ -71,18 +88,28 @@
 </div>
 
 <script>
-    // Function to create a star
+    // Function to generate a random color
+    function randomColor() {
+        const colors = ['#FFD700', '#ADFF2F', '#00BFFF', '#FF69B4', '#FFFFFF'];
+        return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    // Function to create a star with gravity-like effect
     function createStar(x, y) {
         const star = document.createElement('div');
         star.classList.add('star');
         star.style.left = `${x}px`;
         star.style.top = `${y}px`;
+        star.style.backgroundColor = randomColor();
+        star.style.animationDuration = `${Math.random() * 2 + 1}s`; // Random fall duration
+        star.style.transform = `scale(${Math.random() * 0.8 + 0.5})`; // Random size for stars
+
         document.body.appendChild(star);
 
         // Remove the star after the animation is complete
         setTimeout(() => {
             star.remove();
-        }, 2000);
+        }, 3000);
     }
 
     // Event listener for mouse movement
