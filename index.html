@@ -131,6 +131,26 @@
 
     // render the stars
     function mainLoop(time) {
+        clearCanvas();
+
+        // Draw and animate objects
+        drawSky();
+        animateSky();
+
+        drawSun();
+        animateSun();
+
+        drawGround();
+
+        drawPyramid(0);
+        drawPyramid(1);
+        drawPyramid(2);
+
+        // Main loop
+        if (Date.now() < settings.endTime) { // Animation time limit enforcement
+            window.requestAnimationFrame(render);
+        }
+    };
         // resize canva if page size changes
         if (canvas.width !== innerWidth || canvas.height !== innerHeight) {
             canvas.width = innerWidth;
@@ -164,7 +184,6 @@
         doFor(starCount, (i) => stars[i].draw());
 
         requestAnimationFrame(mainLoop);
-    }
     requestAnimationFrame(mainLoop);
 
     // Rescale the grid system for 2x dpi
@@ -295,29 +314,11 @@
     const clearCanvas = () => ctx.clearRect(0, 0, canvasWidth, canvasHeight);
 
     const render = () => {
-        clearCanvas();
 
-        // Draw and animate objects
-        drawSky();
-        animateSky();
 
-        drawSun();
-        animateSun();
-
-        drawGround();
-
-        drawPyramid(0);
-        drawPyramid(1);
-        drawPyramid(2);
-
-        // Main loop
-        if (Date.now() < settings.endTime) { // Animation time limit enforcement
-            window.requestAnimationFrame(render);
-        }
-    };
-
-    // Start animation
-    render();
+        // Start animation
+        render();
+    }
 </script>
 </body>
 </html>
