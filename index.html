@@ -12,10 +12,9 @@
             font-family: Arial, sans-serif;
         }
         canvas {
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
-            z-index: 0; /* Ensure canvas is behind the content */
         }
         .container {
             text-align: center;
@@ -41,38 +40,6 @@
         .icons img {
             width: 50px;
             height: 50px;
-        }
-        .star {
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background-color: white;
-            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-            opacity: 0.8;
-            animation: fall 3s ease-out forwards;
-        }
-        /* Star color variety */
-        .star:nth-child(odd) {
-            background-color: #FFD700; /* Gold */
-        }
-        .star:nth-child(even) {
-            background-color: #ADFF2F; /* Greenish yellow */
-        }
-        .star:nth-child(3n) {
-            background-color: #00BFFF; /* Deep sky blue */
-        }
-        .star:nth-child(5n) {
-            background-color: #FF69B4; /* Hot pink */
-        }
-        /* Star fall animation */
-        @keyframes fall {
-            0% {
-                transform: translate(0, 0) rotate(0deg) scale(1);
-            }
-            100% {
-                transform: translate(var(--x-move), var(--y-move)) rotate(var(--rotation)) scale(var(--scale));
-                opacity: 0;
-            }
         }
     </style>
 </head>
@@ -199,11 +166,158 @@
         requestAnimationFrame(mainLoop);
     }
     requestAnimationFrame(mainLoop);
-    canvas {
-        position: absolute;
-        top: 0px;
-        left: 0px;
-    }
+
+    // Rescale the grid system for 2x dpi
+    canvas.style.width  = canvasWidth + 'px';
+    canvas.style.height = canvasHeight + 'px';
+    ctx.scale(2, 2);
+
+    const settings = {
+        endTime: startTime + 20000, // Epoch time to end animation
+
+        skyYDirection: 1,
+        skyY: 100,
+
+        sunX: 700,
+        sunY: 100,
+
+        sunXDirection: -1,
+        sunYDirection: 0.2
+    };
+
+    const COLOR = {
+        LIGHT_BLUE:  '#a7bde0', // 1st sky color
+        DARK_BLUE:   '#3c68b1', // 2nd sky color
+        SAND:        '#e9bf83', // Ground color
+        DARK_BROWN:  '#3b230b', // 1st pyramid wall color
+        LIGHT_BROWN: '#d49c5f', // 2nd pyramid wall color
+        SUN:         '#fff1dc'  // Sun color
+    };
+
+    const drawSky = () => {
+        // Sky gradient
+        var sky = ctx.createLinearGradient(0, settings.skyY, 0, 0);
+        sky.addColorStop(0, COLOR.LIGHT_BLUE);
+        sky.addColorStop(1, COLOR.DARK_BLUE);
+
+        // Drawing
+        ctx.fillStyle = sky;
+        ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+    };
+
+    const animateSky = () => settings.skyY += settings.skyYDirection;
+
+    const drawSun = () => {
+        ctx.beginPath();
+        ctx.arc(settings.sunX, settings.sunY, 80, 0, twoPI, false);
+        ctx.closePath();
+
+        ctx.fillStyle = COLOR.SUN;
+        ctx.fill();
+    };
+
+    const animateSun = () => {
+        settings.sunX += settings.sunXDirection;
+        settings.sunY += settings.sunYDirection;
+    };
+
+    const drawGround = () => {
+        ctx.fillStyle = COLOR.SAND;
+        ctx.fillRect(0, 297, canvasWidth, 111);
+    };
+
+    const pyramids =
+        [
+            [ // 1st pyramid
+                [ // 1st wall
+                    [516, 297],
+                    [595, 297],
+                    [632, 182]
+                ],
+                [ // 2nd wall
+                    [595, 297],
+                    [764, 297],
+                    [632, 182]
+                ]
+            ],
+            [ // 2nd pyramid
+                [ // 1st wall
+                    [322, 297],
+                    [410, 297],
+                    [497, 100]
+                ],
+                [ // 2nd wall
+                    [410, 297],
+                    [695, 297],
+                    [497, 100]
+                ]
+            ],
+            [ // 3rd pyramid
+                [ // 1st wall
+                    [179, 297],
+                    [245, 297],
+                    [324, 122]
+                ],
+                [ // 2nd wall
+                    [245, 297],
+                    [541, 297],
+                    [324, 122]
+                ]
+            ],
+        ];
+
+    const _drawPyramidWall = (pyramidIndex, wallIndex) => {
+        const pyramidWallPoints = pyramids[pyramidIndex][wallIndex]; // All points of current wall
+
+        // Draw
+        ctx.beginPath();
+        ctx.moveTo(...pyramidWallPoints[0]);
+
+        for (let i = 1; i < pyramidWallPoints.length; i++) { // For all wall points except first
+            ctx.lineTo(...pyramidWallPoints[i]);
+        }
+
+        ctx.closePath();
+
+        // Fill
+        ctx.fillStyle = wallIndex === 0 ? COLOR.DARK_BROWN : COLOR.LIGHT_BROWN;
+        ctx.fill();
+    };
+
+    const drawPyramid = (pyramidIndex) => {
+        // 1st wall
+        _drawPyramidWall(pyramidIndex, 0);
+
+        // 2nd wall
+        _drawPyramidWall(pyramidIndex, 1);
+    };
+
+    const clearCanvas = () => ctx.clearRect(0, 0, canvasWidth, canvasHeight);
+
+    const render = () => {
+        clearCanvas();
+
+        // Draw and animate objects
+        drawSky();
+        animateSky();
+
+        drawSun();
+        animateSun();
+
+        drawGround();
+
+        drawPyramid(0);
+        drawPyramid(1);
+        drawPyramid(2);
+
+        // Main loop
+        if (Date.now() < settings.endTime) { // Animation time limit enforcement
+            window.requestAnimationFrame(render);
+        }
+    };
+
+    // Start animation
+    render();
 </script>
 </body>
 </html>
