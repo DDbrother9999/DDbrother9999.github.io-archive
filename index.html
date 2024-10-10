@@ -150,41 +150,43 @@
         if (Date.now() < settings.endTime) { // Animation time limit enforcement
             window.requestAnimationFrame(render);
         }
+        else {
+            if (canvas.width !== innerWidth || canvas.height !== innerHeight) {
+                canvas.width = innerWidth;
+                canvas.height = innerHeight;
+                // create a new set of stars
+                stars.length = 0;
+                // density is number of pixels one the canvas that has one star
+                starCount = Math.floor((canvas.width * canvas.height) / density);
+                // create the random stars;
+                doFor(starCount, () => createStar(point(randI(canvas.width), randI(canvas.height))));
+                skyGrad = ctx.createLinearGradient(0,0,0,canvas.height);
+                skyGrad.addColorStop(0,"black");
+                doFor(100,(i)=>{
+                    var pos  = clamp(i/100,0,1);
+                    var col = ease(pos);
+                    skyGrad.addColorStop(
+                        pos,
+                        "rgb(" +
+                        Math.floor(skyColour[0] * col) + "," +
+                        Math.floor(skyColour[1] * col) + "," +
+                        Math.floor(skyColour[2] * col) + ")"
+                    );
+                });
+                // floating point error can cause problems if we dont set the top
+                // at 1
+                skyGrad.addColorStop(1,"rgb("+skyColour[0]+","+skyColour[1]+","+skyColour[2]+")");
+
+            }
+            ctx.fillStyle = skyGrad;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            doFor(starCount, (i) => stars[i].draw());
+
+            requestAnimationFrame(mainLoop);
+            requestAnimationFrame(mainLoop);
+        }
     };
         // resize canva if page size changes
-        if (canvas.width !== innerWidth || canvas.height !== innerHeight) {
-            canvas.width = innerWidth;
-            canvas.height = innerHeight;
-            // create a new set of stars
-            stars.length = 0;
-            // density is number of pixels one the canvas that has one star
-            starCount = Math.floor((canvas.width * canvas.height) / density);
-            // create the random stars;
-            doFor(starCount, () => createStar(point(randI(canvas.width), randI(canvas.height))));
-            skyGrad = ctx.createLinearGradient(0,0,0,canvas.height);
-            skyGrad.addColorStop(0,"black");
-            doFor(100,(i)=>{
-                var pos  = clamp(i/100,0,1);
-                var col = ease(pos);
-                skyGrad.addColorStop(
-                    pos,
-                    "rgb(" +
-                    Math.floor(skyColour[0] * col) + "," +
-                    Math.floor(skyColour[1] * col) + "," +
-                    Math.floor(skyColour[2] * col) + ")"
-                );
-            });
-            // floating point error can cause problems if we dont set the top
-            // at 1
-            skyGrad.addColorStop(1,"rgb("+skyColour[0]+","+skyColour[1]+","+skyColour[2]+")");
-
-        }
-        ctx.fillStyle = skyGrad;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        doFor(starCount, (i) => stars[i].draw());
-
-        requestAnimationFrame(mainLoop);
-    requestAnimationFrame(mainLoop);
 
     // Rescale the grid system for 2x dpi
     canvas.style.width  = canvasWidth + 'px';
