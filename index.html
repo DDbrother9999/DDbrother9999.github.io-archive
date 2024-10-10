@@ -6,20 +6,22 @@
     <title>ddbrother.me</title>
     <style>
         body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             margin: 0;
-            background-color: black; /* Set background to black */
-            font-family: Arial, sans-serif;
             overflow: hidden;
-            position: relative;
+            background-color: black; /* Black background for stars */
+            font-family: Arial, sans-serif;
+        }
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0; /* Ensure canvas is behind the content */
         }
         .container {
             text-align: center;
             z-index: 1;
-            color: white; /* Text color white for visibility */
+            position: relative; /* Ensure content is above the stars */
+            color: white; /* White text for visibility */
         }
         h1 {
             font-size: 4rem;
@@ -75,6 +77,8 @@
     </style>
 </head>
 <body>
+<canvas id="canvas"></canvas>
+
 <div class="container">
     <h1>ddbrother.me</h1>
     <p>Hi! I'm DDbrother :)</p>
@@ -87,6 +91,106 @@
         </a>
     </div>
 </div>
+
+<script>
+    // Get the canvas context
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext("2d");
+
+    // Helper functions
+    const doFor = (count, callback) => {
+        var i = 0;
+        while (i < count) {
+            callback(i++);
+        }
+    };
+
+    const randI = (min, max = min + (min = 0)) => (Math.random() * (max - min) + min) | 0;
+    const rand = (min, max = min + (min = 0)) => Math.random() * (max - min) + min;
+    const point = (x = 0, y) => {
+        if (x.x && y === undefined) {return { x: x.x,y: x.y}; }
+        return {x, y: y === undefined ? 0 : y };
+    };
+    const ease = (time, amount = 2) => Math.pow(time % 1, amount);
+    const clamp = (v, min = 1, max = min + (min = 0)) => v < min ? min : v > max ? max : v;
+
+    // Star properties
+    const skyColour = [10, 30, 50];
+    const density = 1000; // Density of stars per screen pixels
+    const colourChangeRate = 16; // Time in frames to change a colour
+    const stars = [];
+    const star = {
+        draw() {
+            this.count += 1; // Keep track of frames
+
+            // Change color every colourChangeRate frames
+            if (this.count % colourChangeRate === 0) {
+                var c = (Math.random() + Math.random() + Math.random() + Math.random()) * 4;
+                var str = "#";
+                str += Math.floor(c * this.red).toString(16); // Change red channel
+                str += Math.floor(c * this.green).toString(16); // Change green channel
+                str += Math.floor(c * this.blue).toString(16); // Change blue channel
+                this.col = str; // Update color
+            }
+
+            ctx.fillStyle = this.col;
+
+            // Apply sub-pixel movement to simulate twinkling (brightness variation)
+            var ox = (Math.random() + Math.random() + Math.random() + Math.random()) / 4;
+            var oy = (Math.random() + Math.random() + Math.random() + Math.random()) / 4;
+            ctx.fillRect(this.pos.x + ox, this.pos.y + oy, this.size, this.size);
+        }
+    }
+
+    // Create a star with Gaussian distribution for size and color
+    function createStar(pos) {
+        stars.push(Object.assign({}, star, {
+            pos,
+            col: "#ccc",
+            count: randI(colourChangeRate),
+            size: rand(1) * rand(1) * 2 + 0.5, // Many smaller stars
+            red: 1 - (rand(1) * rand(1) * rand(1)),
+            green: 1 - (rand(1) * rand(1) * rand(1)),
+            blue: 1 - (rand(1) * rand(1) * rand(1)),
+        }));
+    }
+
+    var starCount;
+    var skyGrad;
+
+    // Main loop to render stars and handle resizing
+    function mainLoop(time) {
+        // Resize canvas if necessary
+        if (canvas.width !== innerWidth || canvas.height !== innerHeight) {
+            canvas.width = innerWidth;
+            canvas.height = innerHeight;
+
+            // Recreate stars based on canvas size
+            stars.length = 0;
+            starCount = Math.floor((canvas.width * canvas.height) / density);
+            doFor(starCount, () => createStar(point(randI(canvas.width), randI(canvas.height))));
+
+            // Create a sky gradient for the background
+            skyGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            skyGrad.addColorStop(0, "black");
+            skyGrad.addColorStop(1, "darkblue");
+        }
+
+        // Clear the canvas with the gradient background
+        ctx.fillStyle = skyGrad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // Draw each star
+        stars.forEach(star => star.draw());
+
+        // Call the main loop again
+        requestAnimationFrame(mainLoop);
+    }
+
+    // Start the main loop
+    requestAnimationFrame(mainLoop);
+
+</script>
 
 <script>
     // Function to generate a random color
