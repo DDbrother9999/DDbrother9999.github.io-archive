@@ -93,149 +93,117 @@
 </div>
 
 <script>
-    // Get the canvas context
-    const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext("2d");
-
-    // Helper functions
+    // function calls a callback count times. Saves typing out for loops all the time
     const doFor = (count, callback) => {
         var i = 0;
         while (i < count) {
-            callback(i++);
+            callback(i++)
         }
     };
-
+    // creates a random integer between min and max. If min only given the between 0 and the value
     const randI = (min, max = min + (min = 0)) => (Math.random() * (max - min) + min) | 0;
+    // same as above but as floats.
     const rand = (min, max = min + (min = 0)) => Math.random() * (max - min) + min;
+    // creates a 2d point at x,y. If only x is a point than set to that point
     const point = (x = 0, y) => {
-        if (x.x && y === undefined) {return { x: x.x,y: x.y}; }
-        return {x, y: y === undefined ? 0 : y };
+        if (x.x && y === undefined) {return { x: x.x,y: x.y} }
+        return {x,y: y === undefined ? 0 : y }
     };
-    const ease = (time, amount = 2) => Math.pow(time % 1, amount);
-    const clamp = (v, min = 1, max = min + (min = 0)) => v < min ? min : v > max ? max : v;
+    function ease (time, amount = 2) { return Math.pow(time % 1,amount) };
+    const clamp = (v, min = 1,max = min + (min = 0)) => v < min ? min : v > max ? max : v;
 
-    // Star properties
-    const skyColour = [10, 30, 50];
-    const density = 1000; // Density of stars per screen pixels
+
+
+
+    // stuff for stars
+    const skyColour = [10,30,50];
+    const density = 1000; // number of star per every density pixels
     const colourChangeRate = 16; // Time in frames to change a colour
     const stars = [];
-    const star = {
+    const star = { // define a star
         draw() {
-            this.count += 1; // Keep track of frames
-
-            // Change color every colourChangeRate frames
-            if (this.count % colourChangeRate === 0) {
+            this.count += 1; // integer counter used to triger color change every 16 frames
+            if (this.count % colourChangeRate === 0) { // change colour ?
+                // colour is a gaussian distrabution (NOT random) centered at #888
                 var c = (Math.random() + Math.random() + Math.random() + Math.random()) * 4;
                 var str = "#";
-                str += Math.floor(c * this.red).toString(16); // Change red channel
-                str += Math.floor(c * this.green).toString(16); // Change green channel
-                str += Math.floor(c * this.blue).toString(16); // Change blue channel
-                this.col = str; // Update color
+                str += Math.floor(c * this.red).toString(16); // change color
+                str += Math.floor(c * this.green).toString(16); // change color
+                str += Math.floor(c * this.blue).toString(16); // change color
+
+
+                this.col = str;
             }
-
             ctx.fillStyle = this.col;
-
-            // Apply sub-pixel movement to simulate twinkling (brightness variation)
+            // move star around  a pixel. Again its not random
+            // but a gaussian distrabution. The movement is sub pixel and will only
+            // make the stars brightness vary not look like its moving
             var ox = (Math.random() + Math.random() + Math.random() + Math.random()) / 4;
             var oy = (Math.random() + Math.random() + Math.random() + Math.random()) / 4;
             ctx.fillRect(this.pos.x + ox, this.pos.y + oy, this.size, this.size);
         }
     }
-
-    // Create a star with Gaussian distribution for size and color
+    // create a random star
+    // the size is caculated to produce many more smaller stars than big
     function createStar(pos) {
         stars.push(Object.assign({}, star, {
             pos,
             col: "#ccc",
             count: randI(colourChangeRate),
-            size: rand(1) * rand(1) * 2 + 0.5, // Many smaller stars
-            red: 1 - (rand(1) * rand(1) * rand(1)),
-            green: 1 - (rand(1) * rand(1) * rand(1)),
-            blue: 1 - (rand(1) * rand(1) * rand(1)),
+            size: rand(1) * rand(1) * 2 + 0.5,
+            red: 1-(rand(1) * rand(1) *rand(1)),  // reduces colour channels
+            green: 1-(rand(1) * rand(1) *rand(1)), // but only by a very small amount
+            blue: 1-(rand(1) * rand(1) *rand(1)),  // most of the time but occasional
+            // star will have a distinct colour
         }));
     }
 
     var starCount;
     var skyGrad;
 
-    // Main loop to render stars and handle resizing
+    // render the stars
     function mainLoop(time) {
-        // Resize canvas if necessary
+        // resize canva if page size changes
         if (canvas.width !== innerWidth || canvas.height !== innerHeight) {
             canvas.width = innerWidth;
             canvas.height = innerHeight;
-
-            // Recreate stars based on canvas size
+            // create a new set of stars
             stars.length = 0;
+            // density is number of pixels one the canvas that has one star
             starCount = Math.floor((canvas.width * canvas.height) / density);
+            // create the random stars;
             doFor(starCount, () => createStar(point(randI(canvas.width), randI(canvas.height))));
+            skyGrad = ctx.createLinearGradient(0,0,0,canvas.height);
+            skyGrad.addColorStop(0,"black");
+            doFor(100,(i)=>{
+                var pos  = clamp(i/100,0,1);
+                var col = ease(pos);
+                skyGrad.addColorStop(
+                    pos,
+                    "rgb(" +
+                    Math.floor(skyColour[0] * col) + "," +
+                    Math.floor(skyColour[1] * col) + "," +
+                    Math.floor(skyColour[2] * col) + ")"
+                );
+            });
+            // floating point error can cause problems if we dont set the top
+            // at 1
+            skyGrad.addColorStop(1,"rgb("+skyColour[0]+","+skyColour[1]+","+skyColour[2]+")");
 
-            // Create a sky gradient for the background
-            skyGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-            skyGrad.addColorStop(0, "black");
-            skyGrad.addColorStop(1, "darkblue");
         }
-
-        // Clear the canvas with the gradient background
         ctx.fillStyle = skyGrad;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
+        doFor(starCount, (i) => stars[i].draw());
 
-        // Draw each star
-        stars.forEach(star => star.draw());
-
-        // Call the main loop again
         requestAnimationFrame(mainLoop);
     }
-
-    // Start the main loop
     requestAnimationFrame(mainLoop);
-
-</script>
-
-<script>
-    // Function to generate a random color
-    function randomColor() {
-        const colors = ['#FFD700', '#ADFF2F', '#00BFFF', '#FF69B4', '#FFFFFF'];
-        return colors[Math.floor(Math.random() * colors.length)];
+    canvas {
+        position: absolute;
+        top: 0px;
+        left: 0px;
     }
-
-    // Function to generate a random value within a range
-    function randomInRange(min, max) {
-        return Math.random() * (max - min) + min;
-    }
-
-    // Function to create a star with random size, direction, and parabolic movement
-    function createStar(x, y) {
-        const star = document.createElement('div');
-        star.classList.add('star');
-        star.style.left = `${x}px`;
-        star.style.top = `${y}px`;
-        star.style.backgroundColor = randomColor();
-
-        // Randomize size, rotation, and movement
-        const size = randomInRange(0.5, 1.5); // Random scale
-        const rotation = randomInRange(0, 360); // Random rotation
-        const xMove = randomInRange(-200, 200); // Random x-axis movement
-        const yMove = randomInRange(300, 800);  // Larger y-axis for parabolic effect
-
-        star.style.setProperty('--scale', size);
-        star.style.setProperty('--rotation', `${rotation}deg`);
-        star.style.setProperty('--x-move', `${xMove}px`);
-        star.style.setProperty('--y-move', `${yMove}px`);
-        star.style.animationDuration = `${randomInRange(2, 4)}s`; // Random fall duration
-
-        document.body.appendChild(star);
-
-        // Remove the star after the animation is complete
-        setTimeout(() => {
-            star.remove();
-        }, 4000);
-    }
-
-    // Event listener for mouse movement
-    document.addEventListener('mousemove', (e) => {
-        createStar(e.pageX, e.pageY);
-    });
 </script>
 </body>
 </html>
