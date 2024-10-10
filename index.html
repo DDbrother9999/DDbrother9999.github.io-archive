@@ -10,11 +10,16 @@
             overflow: hidden;
             background-color: black; /* Black background for stars */
             font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Full screen height */
         }
         canvas {
             position: fixed;
             top: 0;
             left: 0;
+            z-index: 0; /* Stars behind the content */
         }
         .container {
             text-align: center;
@@ -30,17 +35,6 @@
             font-size: 1.5rem;
             margin: 10px 0;
         }
-        .icons {
-            margin-top: 20px;
-        }
-        .icons a {
-            margin: 0 15px;
-            text-decoration: none;
-        }
-        .icons img {
-            width: 50px;
-            height: 50px;
-        }
     </style>
 </head>
 <body>
@@ -49,14 +43,6 @@
 <div class="container">
     <h1>ddbrother.me</h1>
     <p>Hi! I'm DDbrother :)</p>
-    <div class="icons">
-        <a href="https://discord.com/" target="_blank">
-            <img src="https://via.placeholder.com/50" alt="Discord Icon">
-        </a>
-        <a href="https://github.com/" target="_blank">
-            <img src="https://via.placeholder.com/50" alt="GitHub Icon">
-        </a>
-    </div>
 </div>
 
 <script>
@@ -66,12 +52,9 @@
     canvas.height = window.innerHeight;
 
     const skyColour = [10,30,50];
-    const density = 1000; // number of stars per every density pixels
+    const density = 1000; // Number of stars per every density pixels
     const colourChangeRate = 16; // Time in frames to change a color
     const stars = [];
-    const sunsetDuration = 20000; // Sunset animation duration in milliseconds
-    let starsVisible = false; // To control star appearance after sunset
-    let sunsetComplete = false;
 
     const star = {
         draw() {
@@ -107,14 +90,14 @@
     let skyGrad;
 
     const drawStars = () => {
-        if (!starsVisible) return; // Skip if sunset is still playing
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.fillStyle = skyGrad;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         stars.forEach(star => star.draw());
+        requestAnimationFrame(drawStars); // Continuously render the stars
     };
 
-    function startStars() {
-        starsVisible = true;
+    const startStars = () => {
         if (canvas.width !== innerWidth || canvas.height !== innerHeight) {
             canvas.width = innerWidth;
             canvas.height = innerHeight;
@@ -135,80 +118,17 @@
             }
             skyGrad.addColorStop(1, "rgb(" + skyColour[0] + "," + skyColour[1] + "," + skyColour[2] + ")");
         }
-        requestAnimationFrame(drawStars); // Start rendering the stars
-    }
-
-    // Sunset animation code
-    const settings = {
-        endTime: Date.now() + sunsetDuration, // Epoch time to end the sunset animation
-        skyYDirection: 1,
-        skyY: 100,
-        sunX: canvas.width / 2,
-        sunY: 100,
-        sunXDirection: -1,
-        sunYDirection: 0.2
+        requestAnimationFrame(drawStars);
     };
 
-    const COLOR = {
-        LIGHT_BLUE:  '#a7bde0', // Sky color
-        DARK_BLUE:   '#3c68b1', // Darker sky color for evening
-        SAND:        '#e9bf83', // Ground color
-        DARK_BROWN:  '#3b230b', // 1st pyramid wall color
-        LIGHT_BROWN: '#d49c5f', // 2nd pyramid wall color
-        SUN:         '#fff1dc'  // Sun color
-    };
-
-    const drawSky = () => {
-        var sky = ctx.createLinearGradient(0, settings.skyY, 0, 0);
-        sky.addColorStop(0, COLOR.LIGHT_BLUE);
-        sky.addColorStop(1, COLOR.DARK_BLUE);
-        ctx.fillStyle = sky;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-    };
-
-    const animateSun = () => {
-        settings.sunX += settings.sunXDirection;
-        settings.sunY += settings.sunYDirection;
-    };
-
-    const drawSun = () => {
-        ctx.beginPath();
-        ctx.arc(settings.sunX, settings.sunY, 80, 0, Math.PI * 2, false);
-        ctx.fillStyle = COLOR.SUN;
-        ctx.fill();
-    };
-
-    const renderPyramids = () => {
-        // Code to draw pyramids remains the same as your original code
-        // You can add your pyramid drawing code here
-    };
-
-    function animateScene() {
-        clearCanvas();
-        drawSky();
-        animateSun();
-        drawSun();
-        renderPyramids();
-
-        if (Date.now() < settings.endTime) {
-            requestAnimationFrame(animateScene);
-        } else {
-            if (!sunsetComplete) {
-                sunsetComplete = true;
-                startStars();  // Start the stars once sunset animation is complete
-            }
-        }
-    }
-
-    const clearCanvas = () => ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Start sunset animation
-    animateScene();
+    // Start the star animation
+    startStars();
 
     // Handle window resizing
     window.addEventListener('resize', () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
+        startStars();
     });
 </script>
 </body>
