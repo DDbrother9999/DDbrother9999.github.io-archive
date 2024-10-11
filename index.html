@@ -3,133 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ddbrother.me</title>
+    <title>DDbrother.me</title>
     <style>
-        body {
+        /* Black background with centered content */
+        body, html {
             margin: 0;
-            overflow: hidden;
-            background-color: black; /* Black background for stars */
-            font-family: Arial, sans-serif;
+            padding: 0;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh; /* Full screen height */
+            background-color: black;
+            color: white;
+            font-family: Arial, sans-serif;
         }
-        canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 0; /* Stars behind the content */
-        }
+
+        /* Centering container content */
         .container {
             text-align: center;
-            z-index: 1;
-            position: relative; /* Ensure content is above the stars */
-            color: white; /* White text for visibility */
         }
+
+        /* Styling for ddbrother.me */
         h1 {
-            font-size: 4rem;
+            font-size: 50px;
+            margin: 0;
+            margin-bottom: 30px; /* Adds space between the main heading and sub-elements */
+        }
+
+        /* Styling for Hi, I'm DDbrother! with curly font */
+        h2 {
+            font-size: 40px;
+            font-family: 'Brush Script MT', cursive;
             margin: 0;
         }
-        p {
-            font-size: 1.5rem;
-            margin: 10px 0;
+
+        /* Italicized text for EST, he/him */
+        h3 {
+            font-size: 20px;
+            font-style: italic;
+            margin: 10px 0 50px; /* Adds space between the text and the logos */
+        }
+
+        /* Center and add spacing between the logos */
+        .logos {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        /* Set the size and hover effect for logos */
+        .logos img {
+            filter: invert(100%) sepia(0%) saturate(0%) brightness(200%) contrast(100%);
+            fill: white;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+
+        }
+
+        /* Slight opacity change on hover for the logos */
+        .logos img:hover {
+            opacity: 0.8;
         }
     </style>
 </head>
 <body>
-<canvas id="canvas"></canvas>
-
 <div class="container">
     <h1>ddbrother.me</h1>
-    <p>Hi! I'm DDbrother :)</p>
+    <h2>Hi, I'm DDbrother!</h2>
+    <h3>EST, he/him, 15</h3>
+
+    <div class="logos">
+        <a href="https://github.com/DDbrother9999" target="_blank">
+            <img src="assets/img/github.svg" alt="GitHub">
+        </a>
+        <a href="https://discord.com/users/976447336496660500" target="_blank">
+            <img src="assets/img/discord.svg" alt="Discord">
+        </a>
+    </div>
 </div>
-
-<script>
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const skyColour = [10,30,50];
-    const density = 1000; // Number of stars per every density pixels
-    const colourChangeRate = 16; // Time in frames to change a color
-    const stars = [];
-
-    const star = {
-        draw() {
-            this.count += 1;
-            if (this.count % colourChangeRate === 0) {
-                var c = (Math.random() + Math.random() + Math.random() + Math.random()) * 4;
-                var str = "#";
-                str += Math.floor(c * this.red).toString(16);
-                str += Math.floor(c * this.green).toString(16);
-                str += Math.floor(c * this.blue).toString(16);
-                this.col = str;
-            }
-            ctx.fillStyle = this.col;
-            var ox = (Math.random() + Math.random() + Math.random() + Math.random()) / 4;
-            var oy = (Math.random() + Math.random() + Math.random() + Math.random()) / 4;
-            ctx.fillRect(this.pos.x + ox, this.pos.y + oy, this.size, this.size);
-        }
-    };
-
-    const createStar = (pos) => {
-        stars.push(Object.assign({}, star, {
-            pos,
-            col: "#ccc",
-            count: Math.floor(Math.random() * colourChangeRate),
-            size: Math.random() * Math.random() * 2 + 0.5,
-            red: 1 - (Math.random() * Math.random() * Math.random()),
-            green: 1 - (Math.random() * Math.random() * Math.random()),
-            blue: 1 - (Math.random() * Math.random() * Math.random())
-        }));
-    };
-
-    let starCount;
-    let skyGrad;
-
-    const drawStars = () => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = skyGrad;
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-        stars.forEach(star => star.draw());
-        requestAnimationFrame(drawStars); // Continuously render the stars
-    };
-
-    const startStars = () => {
-        if (canvas.width !== innerWidth || canvas.height !== innerHeight) {
-            canvas.width = innerWidth;
-            canvas.height = innerHeight;
-            stars.length = 0;
-            starCount = Math.floor((canvas.width * canvas.height) / density);
-            for (let i = 0; i < starCount; i++) {
-                createStar({ x: Math.random() * canvas.width, y: Math.random() * canvas.height });
-            }
-            skyGrad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-            skyGrad.addColorStop(0, "black");
-            for (let i = 0; i <= 100; i++) {
-                let pos = i / 100;
-                let col = Math.pow(pos, 2);
-                skyGrad.addColorStop(pos, "rgb(" +
-                    Math.floor(skyColour[0] * col) + "," +
-                    Math.floor(skyColour[1] * col) + "," +
-                    Math.floor(skyColour[2] * col) + ")");
-            }
-            skyGrad.addColorStop(1, "rgb(" + skyColour[0] + "," + skyColour[1] + "," + skyColour[2] + ")");
-        }
-        requestAnimationFrame(drawStars);
-    };
-
-    // Start the star animation
-    startStars();
-
-    // Handle window resizing
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        startStars();
-    });
-</script>
 </body>
 </html>
