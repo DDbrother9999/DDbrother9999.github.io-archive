@@ -8,17 +8,16 @@
 header {
   position: sticky;
   top: 0;
-  background-color: rgba( 4, 73, 144, 1.00 );
+  background-color: rgba(4, 73, 144, 1.00);
   z-index: 1000;
 }
 
-/* Navbar */
 .navbar {
   display: flex;
   align-items: center;
   padding: 10px 20px;
   color: #fff;
-  background-color: rgba( 4, 73, 144, 1.00 );
+  background-color: rgba(4, 73, 144, 1.00);
 }
 
 .logo {
@@ -30,8 +29,8 @@ header {
 .brand {
   font-size: 1.5em;
   font-weight: bold;
-  text-transform: uppercase; /* Always capitalize text */
-  flex-grow: 1; /* Expand to fill space */
+  text-transform: uppercase;
+  flex-grow: 1;
 }
 
 .nav-links {
@@ -40,8 +39,7 @@ header {
   margin-left: auto;
   font-size: 1.5em;
   font-weight: bold;
-  text-transform: uppercase; /* Always capitalize text */
-  flex-grow: 1; /* Expand to fill space */
+  text-transform: uppercase;
 }
 
 .nav-links li {
@@ -85,6 +83,26 @@ header {
   justify-content: center;
 }
 
+.carousel-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 600px;
+  height: 400px;
+  overflow: hidden;
+}
+
+.carousel-image {
+  display: none;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carousel-image:first-child {
+  display: block;
+}
 
 .carousel-button {
   background-color: rgba(0, 0, 0, 0.5);
@@ -107,32 +125,9 @@ header {
   right: 10px;
 }
 
-.carousel-container {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  max-width: 600px; /* Set the max width for the carousel */
-  height: 400px; /* Set a fixed height for consistent cropping */
-  overflow: hidden;
-}
-
-.carousel-image {
-  display: none;
-  width: 100%;
-  height: 100%;
-  object-fit: cover; /* Resize and crop images to fit */
-}
-
-
-.carousel-image:first-child {
-  display: block;
-}
-
-/* Carousel indicators (dots) */
 .carousel-indicators {
   text-align: center;
-  margin-top: 10px;
+  margin-top: 20px; /* Adds space between image and dots */
 }
 
 .dot {
@@ -146,7 +141,7 @@ header {
 }
 
 .dot.active {
-  background-color: white;
+  background-color: rgba(4, 73, 144, 1.00);
 }
 
 .description {
@@ -154,5 +149,3 @@ header {
   padding: 0 20px;
   font-size: 1.2em;
 }
-
-/* Add any additional styles as needed */

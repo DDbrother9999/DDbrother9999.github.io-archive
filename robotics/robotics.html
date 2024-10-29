@@ -11,12 +11,12 @@
 <!-- Navbar -->
 <header>
     <nav class="navbar">
-        <img src="../assets/robotics/NOBLE-ROBOTICS.svg" alt="Nobles Robotics Logo" class="logo">
+        <img src="../assets/robotics/NOBLE-ROBOTICS.svg" alt="Nobles Robotics Logo" class="logo" href="/robotics/robotics">
         <span class="brand">Nobles Robotics</span>
         <ul class="nav-links">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About us</a></li>
-            <li><a href="#">Donate</a></li>
+            <li><a href="/robotics/robotics">Home</a></li>
+            <li><a href="/robotics/team">About us</a></li>
+            <li><a href="/robotics/sponsors">Sponsors</a></li>
         </ul>
     </nav>
 </header>
@@ -44,7 +44,6 @@
         </div>
 
         <div class="carousel-indicators">
-            <!-- Indicator dots, one per image -->
             <span class="dot" onclick="currentSlide(0)"></span>
             <span class="dot" onclick="currentSlide(1)"></span>
             <span class="dot" onclick="currentSlide(2)"></span>
@@ -65,40 +64,31 @@
         let dots = document.querySelectorAll(".dot");
         let autoAdvanceTimeout;
 
-        // Function to display the current slide and highlight the corresponding dot
         function showSlide(index) {
-            // Hide all images
             images.forEach(img => img.style.display = "none");
             dots.forEach(dot => dot.classList.remove("active"));
-
-            // Show selected image and activate corresponding dot
             images[index].style.display = "block";
             dots[index].classList.add("active");
-
             currentImageIndex = index;
         }
 
-        // Show the next image
         function showNext() {
             currentImageIndex = (currentImageIndex + 1) % images.length;
             showSlide(currentImageIndex);
             resetAutoAdvance();
         }
 
-        // Show the previous image
         function showPrevious() {
             currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
             showSlide(currentImageIndex);
             resetAutoAdvance();
         }
 
-        // Show a specific image based on dot click
         function currentSlide(index) {
             showSlide(index);
             resetAutoAdvance();
         }
 
-        // Auto-advance every 10 seconds
         function autoAdvance() {
             autoAdvanceTimeout = setTimeout(() => {
                 showNext();
@@ -106,17 +96,14 @@
             }, 10000);
         }
 
-        // Reset auto-advance when manually navigating
         function resetAutoAdvance() {
             clearTimeout(autoAdvanceTimeout);
             autoAdvance();
         }
 
-        // Initialize carousel
         showSlide(currentImageIndex);
         autoAdvance();
     </script>
-
 </main>
 </body>
 </html>
