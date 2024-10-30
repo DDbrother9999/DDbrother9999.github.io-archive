@@ -6,6 +6,32 @@
     <title>Nobles Robotics</title>
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
+    <style>
+        .description {
+            text-align: center; /* Centers the description text */
+            margin-bottom: 10px; /* Adds some space between text and dots */
+        }
+
+        .carousel-indicators {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px; /* Space between dots and description */
+        }
+
+        .dot {
+            height: 15px;
+            width: 15px;
+            margin: 0 5px; /* Space between dots */
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background-color: #717171;
+        }
+    </style>
 </head>
 <body>
 <!-- Navbar -->
@@ -43,6 +69,10 @@
             <button class="carousel-button next" onclick="showNext()">&#10095;</button>
         </div>
 
+        <div class="description">
+            <p>Welcome to Nobles Robotics. Here, we build the future, one robot at a time...</p>
+        </div>
+
         <div class="carousel-indicators">
             <span class="dot" onclick="currentSlide(0)"></span>
             <span class="dot" onclick="currentSlide(1)"></span>
@@ -51,10 +81,6 @@
             <span class="dot" onclick="currentSlide(4)"></span>
             <span class="dot" onclick="currentSlide(5)"></span>
             <span class="dot" onclick="currentSlide(6)"></span>
-        </div>
-
-        <div class="description">
-            <p>Welcome to Nobles Robotics. Here, we build the future, one robot at a time...</p>
         </div>
     </section>
 
