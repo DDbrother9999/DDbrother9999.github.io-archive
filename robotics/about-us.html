@@ -6,9 +6,56 @@
     <title>About Us - Nobles Robotics</title>
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,600,700&amp;display=swap">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .about-section {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .about-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+        .about-section p {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            color: #555;
+        }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 0 20px;
+        }
+        .team-member {
+            text-align: center;
+        }
+        .team-member img {
+            width: 150px; /* Ensure a consistent width */
+            height: 150px; /* Match the height to make it square */
+            border-radius: 50%; /* Makes the image a circle */
+            object-fit: cover; /* Ensures the image scales/crops correctly */
+            margin-bottom: 10px;
+            border: 3px solid rgba(4, 73, 144, 1.00);
+        }
+
+        .team-member h3 {
+            margin: 10px 0 5px;
+            font-size: 1.2em;
+        }
+        .team-member p {
+            margin: 0;
+            font-size: 1em;
+            color: #777;
+        }
+    </style>
 </head>
 <body>
-<!-- Navbar -->
 <header>
     <nav class="navbar">
         <a href="robotics.html"><img src="../assets/robotics/NOBLE-ROBOTICS.svg" alt="Nobles Robotics Logo" class="logo"></a>
@@ -21,143 +68,70 @@
         </ul>
     </nav>
 </header>
-<style>
-    .about-us {
-        text-align: center;
-        padding: 50px;
-        background-color: #f9f9f9;
-    }
-
-    /* Move coaches section down */
-    .about-us h2 {
-        margin-top: 40px; /* Adjust this value to add more space above the coaches section */
-        font-size: 36px;
-        margin-bottom: 40px;
-    }
-
-    /* Reduce the space between coach images */
-    .coaches {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
-    .about-us h1{
-        font-size: 36px;
-        margin-bottom: 40px;
-    }
-
-    .team-members {
-        display: grid;
-        gap: 20px;
-        justify-items: center;
-    }
-
-    .students {
-        grid-template-columns: repeat(3, 1fr);
-    }
-
-    @media (max-width: 768px) {
-        .students {
-            grid-template-columns: repeat(2, 1fr);
-        }
-        .coaches {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .students, .coaches {
-            grid-template-columns: 1fr;
-        }
-    }
-
-    .team-member {
-        text-align: center;
-        max-width: 200px;
-    }
-
-    .team-member img {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        object-fit: cover;
-        border: 4px solid #ddd;
-        transition: border 0.3s;
-    }
-
-    .team-member img:hover {
-        border: 4px solid #007bff;
-    }
-
-    .team-member h2 {
-        font-size: 18px;
-        margin-top: 10px;
-        font-weight: 600;
-    }
-
-    .team-member p {
-        font-size: 14px;
-        color: #666;
-        margin-top: 5px;
-    }
-</style>
-<!-- About Us Section -->
-<main>
-    <section class="about-us">
-        <h1>Students</h1>
-        <div class="team-members students">
-            <!-- Repeat this block for each student team member -->
-            <div class="team-member">
-                <img src="../assets/robotics/team/Jeffery.jpg" alt="Jeffery">
-                <h2>Jeffery</h2>
-                <p>(insert short Bio here).</p>
-            </div>
-
-            <div class="team-member">
-                <img src="../assets/robotics/team/Raphael.jpg" alt="Raphael">
-                <h2>Raphael</h2>
-                <p>(insert short Bio here).</p>
-            </div>
-
-            <div class="team-member">
-                <img src="../assets/robotics/team/Derek.jpg" alt="Derek">
-                <h2>Derek</h2>
-                <p>(insert short Bio here).</p>
-            </div>
-
-            <div class="team-member">
-                <img src="../assets/robotics/team/Alex.jpg" alt="Alex">
-                <h2>Alex</h2>
-                <p>(insert short Bio here).</p>
-            </div>
-
-            <div class="team-member">
-                <img src="../assets/robotics/team/George.jpg" alt="George">
-                <h2>George</h2>
-                <p>(insert short Bio here).</p>
-            </div>
-
-            <div class="team-member">
-                <img src="../assets/robotics/team/Kenny.jpg" alt="Kenny">
-                <h2>Kenny</h2>
-                <p>(insert short Bio here).</p>
-            </div>
+<div class="about-section">
+    <h2>Meet the Team</h2>
+    <p>We’re a team of passionate individuals dedicated to making a difference through innovation and collaboration.</p>
+    <div class="team-grid">
+        <div class="team-member">
+            <img src="../assets/robotics/team/Shumway.jpg" alt="Mr. Shumway">
+            <h3>Mr. Shumway</h3>
+            <p>Faculty Mentor</p>
         </div>
-
-        <h2>Coaches</h2>
-        <div class="team-members coaches">
-            <div class="team-member">
-                <img src="../assets/robotics/team/Montgomery.jpg" alt="Montgomery">
-                <h2>Mr. Montgomery</h2>
-                <p>(insert short Bio here)</p>
-            </div>
-
-            <div class="team-member">
-                <img src="../assets/robotics/team/Shumway.jpg" alt="Shumway">
-                <h2>Mr. Shumway</h2>
-                <p>(insert short Bio here)</p>
-            </div>
+        <div class="team-member">
+            <img src="../assets/robotics/team/JEFFREY_LIU.jpg" alt="Jeffery Liu">
+            <h3>Jeffery Liu</h3>
+            <p>Captain</p>
         </div>
-    </section>
-</main>
+        <div class="team-member">
+            <img src="../assets/robotics/team/Montgomery.jpg" alt="Mr. Montgomery">
+            <h3>Mr. Montgomery</h3>
+            <p>Faculty Mentor</p>
+        </div>
+        <div class="team-member">
+            <img src="../assets/robotics/team/GEORGE_PINKAS.jpg" alt="George Pinkas">
+            <h3>George Pinkas</h3>
+            <p>Mechanical</p>
+        </div>
+        <div class="team-member">
+            <img src="../assets/robotics/team/DEREK_YIN.jpg" alt="Derek Yin">
+            <h3>Derek Yin</h3>
+            <p>Software</p>
+        </div>
+        <div class="team-member">
+            <img src="../assets/robotics/team/ALEX_CAI.jpg" alt="Alex Cai">
+            <h3>Alex Cai</h3>
+            <p>Mechanical</p>
+        </div>
+        <div class="team-member">
+            <img src="../assets/robotics/team/RAPHAEL_KLAUBER.jpg" alt="Raphael Klauber">
+            <h3>Raphael Klauber</h3>
+            <p>Mechanical</p>
+        </div>
+        <div class="team-member">
+            <img src="../assets/robotics/team/JAYDEN_LEUNG.jpg" alt="Jayden Leung">
+            <h3>Jayden Leung</h3>
+            <p>Software</p>
+        </div>
+        <div class="team-member">
+            <img src="../assets/robotics/team/JESSE_CHUKWU.jpg" alt="Kenny Chukwu">
+            <h3>Jesse (Kenny) Chukwu</h3>
+            <p>Mechanical</p>
+        </div>
+    </div>
+</div>
 </body>
+<footer style="background-color: #004990; color: #ffffff; padding: 30px 0; text-align: center; font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center;">
+    <p style="margin: 0; font-size: 1.2em; font-weight: bold;">Nobles Robotics</p>
+    <div class="logos" style="margin: 15px 0; display: flex; justify-content: center; align-items: center;">
+        <a href="https://www.instagram.com/noblesrobotics/" target="_blank" style="text-decoration: none; border: none; margin: 0 15px;">
+            <img src="../assets/robotics/icons/instagram.png" alt="Instagram" style="width: 50px; height: 50px;">
+        </a>
+        <a href="https://www.youtube.com/@NoblesRobotics" target="_blank" style="text-decoration: none; border: none; margin: 0 15px;">
+            <img src="../assets/robotics/icons/youtube.png" alt="YouTube" style="width: 50px; height: 50px;">
+        </a>
+        <a href="mailto:dyin27@nobles.edu" target="_blank" style="text-decoration: none; border: none; margin: 0 15px;">
+            <img src="../assets/robotics/icons/gmail.png" alt="Gmail" style="width: 50px; height: 50px;">
+        </a>
+    </div>
+</footer>
 </html>
