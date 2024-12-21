@@ -7,36 +7,6 @@
     <link rel="stylesheet" href="../assets/css/styles.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&amp;display=swap">
     <style>
-        .description {
-            text-align: center;
-            margin-bottom: 10px;
-        }
-
-        .carousel-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center; /* Centers contents including indicators */
-        }
-
-        .carousel-indicators {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-        }
-
-        .dot {
-            height: 15px;
-            width: 15px;
-            margin: 0 5px;
-            background-color: gray; /* Blue color for dots */
-            border-radius: 50%;
-            display: inline-block;
-            cursor: pointer;
-        }
-
-        .dot.active {
-            background-color: rgba(4, 73, 144, 1.00); /* Darker blue for the active dot */
-        }
     </style>
 </head>
 <body>
@@ -58,92 +28,6 @@
 
 <!-- Main Content -->
 <main>
-    <section class="hero">
-        <h1>Nobles Robotics</h1>
-    </section>
-    <section class="content">
-        <div class="carousel-container">
-            <button class="carousel-button prev" onclick="showPrevious()">&#10094;</button>
-
-            <div class="carousel">
-                <img src="../assets/robotics/carousel/20240103-P1070161.jpg" alt="Carousel Image 1" class="carousel-image">
-                <img src="../assets/robotics/carousel/20240103-P1070177.jpg" alt="Carousel Image 2" class="carousel-image">
-                <img src="../assets/robotics/carousel/20240103-P1070187.jpg" alt="Carousel Image 3" class="carousel-image">
-                <img src="../assets/robotics/carousel/20240103-P1070200.jpg" alt="Carousel Image 4" class="carousel-image">
-                <img src="../assets/robotics/carousel/20240103-P1070202.jpg" alt="Carousel Image 5" class="carousel-image">
-                <img src="../assets/robotics/carousel/20240103-P1070215.jpg" alt="Carousel Image 6" class="carousel-image">
-                <img src="../assets/robotics/carousel/20240104-P1070224.jpg" alt="Carousel Image 7" class="carousel-image">
-            </div>
-
-            <button class="carousel-button next" onclick="showNext()">&#10095;</button>
-
-            <!-- Centered indicators directly under the carousel -->
-            <div class="carousel-indicators">
-                <span class="dot" onclick="currentSlide(0)"></span>
-                <span class="dot" onclick="currentSlide(1)"></span>
-                <span class="dot" onclick="currentSlide(2)"></span>
-                <span class="dot" onclick="currentSlide(3)"></span>
-                <span class="dot" onclick="currentSlide(4)"></span>
-                <span class="dot" onclick="currentSlide(5)"></span>
-                <span class="dot" onclick="currentSlide(6)"></span>
-            </div>
-        </div>
-
-        <div class="description">
-            <p>Hi! We're Nobles Robotics, a collection of students from Nobles and Greenough School, MA. Check out our tabs to learn more about our previous accomplishments and team.  </p>
-        </div>
-    </section>
-
-    <script>
-        let currentImageIndex = 0;
-        let images = document.querySelectorAll(".carousel-image");
-        let dots = document.querySelectorAll(".dot");
-        let autoAdvanceTimeout;
-
-        function showSlide(index) {
-            images.forEach(img => img.style.display = "none");
-            dots.forEach(dot => dot.classList.remove("active"));
-            images[index].style.display = "block";
-            dots[index].classList.add("active");
-            currentImageIndex = index;
-        }
-
-        function showNext() {
-            currentImageIndex = (currentImageIndex + 1) % images.length;
-            showSlide(currentImageIndex);
-            resetAutoAdvance();
-        }
-
-        function showPrevious() {
-            currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
-            showSlide(currentImageIndex);
-            resetAutoAdvance();
-        }
-
-        function currentSlide(index) {
-            showSlide(index);
-            resetAutoAdvance();
-        }
-
-        function autoAdvance() {
-            autoAdvanceTimeout = setTimeout(() => {
-                showNext();
-                autoAdvance();
-            }, 10000);
-        }
-
-        function resetAutoAdvance() {
-            clearTimeout(autoAdvanceTimeout);
-            autoAdvance();
-        }
-
-        // Initialize the carousel by hiding all images except the first one
-        images.forEach((img, index) => {
-            img.style.display = index === 0 ? "block" : "none";
-        });
-        showSlide(currentImageIndex);
-        autoAdvance();
-    </script>
 </main>
 </body>
 <footer style="background-color: #004990; color: #ffffff; padding: 30px 0; text-align: center; font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center;">
