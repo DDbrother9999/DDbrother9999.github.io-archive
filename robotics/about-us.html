@@ -36,10 +36,10 @@
             text-align: center;
         }
         .team-member img {
-            width: 150px; /* Ensure a consistent width */
-            height: 150px; /* Match the height to make it square */
-            border-radius: 50%; /* Makes the image a circle */
-            object-fit: cover; /* Ensures the image scales/crops correctly */
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
             margin-bottom: 10px;
             border: 3px solid rgba(4, 73, 144, 1.00);
         }
@@ -52,6 +52,47 @@
             margin: 0;
             font-size: 1em;
             color: #777;
+        }
+        .into-deep-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 60px;
+            background-color: #f5f5f5;
+        }
+        .into-deep-logo img {
+            max-width: 400px;
+            height: auto;
+            object-fit: cover;
+            object-position: left;
+            width: 100%;
+        }
+        .into-deep-info {
+            flex: 1;
+            margin-left: 40px;
+            margin-top: -160px
+        }
+        .into-deep-info h3 {
+            font-size: 1.8em;
+            margin-bottom: 0;
+        }
+        .into-deep-info-box {
+            padding-top: 20px;
+            font-size: 1.1em;
+            line-height: 1.6;
+            color: black;
+        }
+        .mission-quote {
+            align-content: center;
+            font-size: 1.5em;
+            color: black;
+            margin-top: 20px;
+            font-style: italic;
+            background-color: #9CD9E8;
+            padding: 20px 20px 20px;
+            border-radius: 15px;
+            text-align: center;
+            display: inline-block;
         }
     </style>
 </head>
@@ -117,6 +158,22 @@
             <h3>Jesse (Kenny) Chukwu</h3>
             <p>Mechanical</p>
         </div>
+    </div>
+</div>
+<div class="into-deep-section">
+    <div class="into-deep-logo">
+        <img src="../assets/robotics/icons/ITD_patch.png" alt="Into the Deep Logo">
+    </div>
+    <div class="into-deep-info">
+        <h3>What is the FIRST Robotics Challenge (FTC)? </h3>
+        <p class="mission-quote">
+            "The mission of FIRST is to provide life-changing robotics programs that give young people the skills, confidence, and resilience to build a better world."
+        </p>
+        <p class="into-deep-info-box">
+            FIRST (For Inspiration and Recognition of Science and Technology) FTC (FIRST Tech Challenge) Robotics is a program
+            that inspires young minds through engaging and exciting robotics challenges. Teams design, build, and program robots
+            to compete in thrilling competitions, all while fostering teamwork, innovation, and critical thinking skills.
+        </p>
     </div>
 </div>
 </body>
