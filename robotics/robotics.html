@@ -15,7 +15,7 @@
         .carousel-container {
             display: flex;
             flex-direction: column;
-            align-items: center; /* Centers contents including indicators */
+            align-items: center;
         }
 
         .carousel-indicators {
@@ -28,14 +28,14 @@
             height: 15px;
             width: 15px;
             margin: 0 5px;
-            background-color: gray; /* Blue color for dots */
+            background-color: gray;
             border-radius: 50%;
             display: inline-block;
             cursor: pointer;
         }
 
         .dot.active {
-            background-color: rgba(4, 73, 144, 1.00); /* Darker blue for the active dot */
+            background-color: rgba(4, 73, 144, 1.00);
         }
         .content {
             display: flex;
@@ -88,7 +88,7 @@
 
         .carousel-indicators {
             text-align: center;
-            margin-top: 20px; /* Adds space between image and dots */
+            margin-top: 20px;
         }
 
         .dot {
@@ -112,19 +112,68 @@
             background-image: url('../assets/robotics/robotics-homepage.jpg');
             background-size: cover;
             background-position: center;
-            height: 60vh;
+            height: calc(100vh - 190px); /* Adjust height for padding */
+            padding: 20px; /* Add padding around the entire hero section */
             display: flex;
             justify-content: center;
             align-items: center;
             color: #fff;
             text-align: center;
+            box-sizing: border-box;
+            border: 10px solid rgba(255, 255, 255, 0.2);
+            margin: 50px;
         }
 
         .hero h1 {
-            font-size: 3em;
+            font-size: 2.5em;
             background-color: rgba(0, 0, 0, 0.5);
-            padding: 20px;
+            padding: 20px 30px;
+            border-radius: 8px;
+            max-width: 80%;
+            margin: 0 auto;
         }
+
+
+
+        .mission-section {
+            background-color: #004990;
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .mission-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .mission-text {
+            color: #ffffff;
+            font-size: 1.8em;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            font-weight: 300;
+        }
+
+        .mission-text .highlight {
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .mission-button {
+            background-color: #9CD9E8;
+            color: #ffffff;
+            border: none;
+            padding: 10px 30px;
+            font-size: 1em;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .mission-button:hover {
+            background-color: #7CB3C5;
+        }
+
     </style>
 </head>
 <body>
@@ -149,6 +198,12 @@
     <section class="hero">
         <h1>Nobles Robotics</h1>
     </section>
+    <section class="mission-section">
+        <div class="mission-container">
+            <p class="mission-text">Insert well typed 1 liner here!</p>
+            <button class="mission-button" onclick="location.href='about-us.html'">Read More</button>
+        </div>
+    </section>
     <section class="content">
         <div class="carousel-container">
             <button class="carousel-button prev" onclick="showPrevious()">&#10094;</button>
@@ -165,7 +220,6 @@
 
             <button class="carousel-button next" onclick="showNext()">&#10095;</button>
 
-            <!-- Centered indicators directly under the carousel -->
             <div class="carousel-indicators">
                 <span class="dot" onclick="currentSlide(0)"></span>
                 <span class="dot" onclick="currentSlide(1)"></span>
@@ -176,7 +230,7 @@
                 <span class="dot" onclick="currentSlide(6)"></span>
             </div>
         </div>
-
+        <!-- TODO: REPLACE DESCRIPTION W/ 3 NAV BUTTONS | Find Out More About Us | Learn About our Accomplishments | View Our Sponsors-->
         <div class="description">
             <p>Hi! We're Nobles Robotics, a collection of students from Nobles and Greenough School, MA. Check out our tabs to learn more about our previous accomplishments and team.  </p>
         </div>
@@ -225,13 +279,13 @@
             autoAdvance();
         }
 
-        // Initialize the carousel by hiding all images except the first one
         images.forEach((img, index) => {
             img.style.display = index === 0 ? "block" : "none";
         });
         showSlide(currentImageIndex);
         autoAdvance();
     </script>
+
 </main>
 </body>
 <footer style="background-color: #004990; color: #ffffff; padding: 30px 0; text-align: center; font-family: Arial, sans-serif; display: flex; flex-direction: column; align-items: center;">
